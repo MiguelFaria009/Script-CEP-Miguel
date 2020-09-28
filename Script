@@ -1,0 +1,88 @@
+<script type="text/javascript" 
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+<script type="text/javascript" >
+
+jQuery(document).ready(function( $ ) {
+function limpa_formulario_cep() {
+
+$("#form-field-endereco").val("");
+$("#form-field-cidade").val("");
+$("#form-field-estado").val("");
+$("#form-field-bairro").val("");
+
+}
+
+$("#form-field-cep").blur(function() {
+
+var cep = $(this).val().replace(/\D/g, '');
+
+if (cep != "") {
+
+var validacep = /^[0-9]{8}$/;
+
+if(validacep.test(cep)) {
+
+$("#form-field-endereco").val("...");
+$("#form-field-cidade").val("...");
+$("#form-field-estado").val("...");
+$("#form-field-bairro").val("...");
+
+$.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+if (!("erro" in dados)) {
+
+$("#form-field-endereco").val(dados.logradouro);
+$("#form-field-cidade").val(dados.localidade);
+$("#form-field-estado").val(dados.uf);
+$("#form-field-bairro").val(dados.bairro);
+}
+else {
+
+limpa_formulario_cep();
+alert("CEP não encontrado.");
+}
+});
+}
+else {
+
+limpa_formulario_cep();
+alert("Formato de CEP inválido.");
+}
+}
+else {
+
+limpa_formulario_cep();
+}
+});
+$("#form-field-celular").mask("(99) 99999-9999");
+$("#form-field-whatsapp").mask("(99) 99999-9999");
+$("#form-field-telefone").mask("(99) 99999-9999");
+$("#form-field-rg").mask("00.000.000-0");
+$("#form-field-cpf").mask("000.000.000-00");
+$("#form-field-cep").mask("00000-000");
+$("#form-field-venda").mask("#");
+$("#form-field-locacao").mask("#");
+$("#form-field-dormitorios").mask("00");
+$("#form-field-suites").mask("00");
+$("#form-field-ar").mask("00");
+$("#form-field-salas").mask("00");
+$("#form-field-banheiros").mask("00");
+$("#form-field-closet").mask("00");
+$("#form-field-garagem").mask("00");
+$("#form-field-coberta").mask("00");
+$("#form-field-descoberta").mask("00");
+$("#form-field-estacionamento").mask("00");
+$("#form-field-visitantes").mask("00");
+$("#form-field-iptu").mask("00");
+$('.money').mask('000.000.000.000.000,00', {reverse: true});
+$('.locacao').mask('000.000.000.000.000,00', {reverse: true});
+$('.condominio').mask('000.000.000.000.000,00', {reverse: true});
+$('.iptu').mask('000.000.000.000.000,00', {reverse: true});
+$('.itr').mask('000.000.000.000.000,00', {reverse: true});
+
+
+
+
+
+});
+</script>
